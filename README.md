@@ -126,7 +126,7 @@ This repository demonstrates Behavioral, Creational, and Structural Design Patte
 ---
 
 ### How to Run
-```bash
+
 # Clone the repository
 git clone <your-repo-link>
 cd <project-folder>
@@ -242,7 +242,7 @@ A console-based simulation of a Smart Home System that allows users to manage an
 
 ### How to Run
 
-```bash
+
 # Compile all packages
 javac Main.java devices/*.java hub/*.java util/*.java scheduler/*.java automation/*.java
 
