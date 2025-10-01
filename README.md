@@ -137,150 +137,117 @@ javac *.java
 # Run programs
 java -cp . Main
 
-EXP 2 : Smart Home System
 
-A console-based simulation of a Smart Home System that allows users to manage and automate smart devices such as lights, thermostats, and door locks through a central hub. This project focuses on logic, code quality, and the application of OOP principles and design patterns rather than UI aesthetics.
 
-Features
-1. Device Management
+---
 
-Initialize the system with default devices: lights, thermostat, and door locks
+## EXP 2 : Smart Home System
 
-Add new devices dynamically with a unique ID and type
+A console-based simulation of a Smart Home System that allows users to manage and automate smart devices such as lights, thermostats, and door locks through a central hub. This project demonstrates OOP principles, design patterns, and clean code practices.
 
-Remove devices dynamically
+---
 
-Prevent adding devices with duplicate IDs
+### Features
 
-Gracefully handle attempts to remove non-existing devices
+1. **Device Management**
+   - Initialize system with default devices: lights, thermostat, door locks  
+   - Add new devices dynamically with unique ID and type  
+   - Remove devices dynamically  
+   - Prevent adding devices with duplicate IDs  
+   - Handle attempts to remove non-existing devices gracefully  
 
-2. Device Control
+2. **Device Control**
+   - Turn devices ON or OFF with proper logging  
+   - Prevent turning ON an already ON device or turning OFF an already OFF device  
+   - Provide meaningful feedback to the user  
 
-Turn devices ON or OFF with proper logging
+3. **Status Reporting**
+   - View the status of all devices at any time  
+   - Display device details (type, ID, current state or temperature)  
 
-Prevent turning ON an already ON device or turning OFF an already OFF device
+4. **Scheduling (Simulation)**
+   - Schedule devices to turn ON or OFF at a specific time  
+   - Scheduler is simulated for demonstration  
 
-Provide meaningful feedback to the user
+5. **Automated Triggers**
+   - Create triggers based on device conditions (e.g., thermostat temperature > threshold)  
+   - Automatically perform actions like turning a device ON or OFF  
+   - Checks device state before performing actions  
+   - Logs each trigger activation or if the device is already in the desired state  
 
-3. Status Reporting
+6. **Error Handling**
+   - Handles invalid device IDs, duplicate device additions, and empty device lists gracefully  
+   - Prevents program from crashing due to exceptions  
+   - Logs all important events and errors  
 
-View the status of all devices at any time
+---
 
-Display device details (type, ID, current state or temperature)
+### Classes Overview
 
-4. Scheduling (Simulation)
+**1. AbstractDevice (devices package)**  
+- Base class for all smart devices  
+- Stores `id`, `type`, `isOn` state  
+- Methods: `turnOn()`, `turnOff()`, `getStatus()`, `isDeviceOn()`  
 
-Schedule devices to turn ON or OFF at a specific time
+**2. Light, Thermostat, Door (devices package)**  
+- Specific implementations of smart devices  
+- Thermostat holds temperature  
+- Light/Door inherit behavior from AbstractDevice  
 
-Scheduler is simulated for demonstration; actual time-based automation is not implemented
+**3. SmartDevice Interface**  
+- Defines basic operations: `turnOn`, `turnOff`, `getStatus`, `getId`, `getType`  
 
-5. Automated Triggers
+**4. DeviceFactory (devices package)**  
+- Implements Factory Method pattern  
+- Creates device instances dynamically based on type and ID  
 
-Create triggers based on device conditions (e.g., thermostat temperature exceeds a threshold)
+**5. DeviceProxy (devices package)**  
+- Implements Proxy Pattern  
+- Controls access to devices and logs operations  
 
-Automatically perform actions like turning a device ON or OFF
+**6. SmartHomeHub (hub package)**  
+- Central hub managing devices, schedules, and triggers  
 
-Checks the current state to avoid unnecessary actions
+**7. AutomationEngine (automation package)**  
+- Handles automation triggers  
+- Stores triggers and executes actions if conditions are met  
 
-Logs each trigger activation or if the device is already in the desired state
+**8. Trigger (automation package)**  
+- Represents an automation rule with `condition` and `action`  
 
-Allows the user to enter triggers dynamically with an example format for guidance
+**9. LoggingUtil (util package)**  
+- Centralized logging with `info()`, `warn()`, `error()` and timestamps  
 
-6. Error Handling
+---
 
-Handles invalid device IDs, duplicate device additions, and empty device lists gracefully
+### How Functionalities Are Achieved
 
-Prevents the program from crashing due to exceptions
+- **Turn ON/OFF devices:** Uses `DeviceProxy` to check state before performing operations  
+- **View status:** Hub collects status from all devices and prints  
+- **Add/Remove devices:** Hub validates unique IDs and logs events  
+- **Schedule commands:** Simulated schedules maintained in hub  
+- **Automation triggers:** Conditions checked and actions executed if needed; logs indicate results  
+- **Error handling:** Invalid inputs handled gracefully without crashing  
 
-Logs all important events and errors using a Logging Utility
+---
 
-Classes Overview
+### Design Patterns Implemented
 
-1. AbstractDevice (devices package)
+1. **Factory Method (Creational)** – `DeviceFactory` creates devices dynamically  
+2. **Proxy Pattern (Structural)** – `DeviceProxy` controls access and logs operations  
+3. **Observer/Automation Concept (Behavioral)** – `AutomationEngine` monitors device states  
+4. **SOLID & OOP Principles** – Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Encapsulation  
 
-Base class for all smart devices
+---
 
-Stores id, type, and isOn state
+### How to Run
 
-Methods: turn devices ON/OFF, getStatus(), isDeviceOn()
-
-2. Light, Thermostat, Door (devices package)
-
-Specific implementations of smart devices
-
-Thermostat holds temperature
-
-Light/Door inherit behavior from AbstractDevice
-
-3. SmartDevice Interface
-
-Defines basic operations for all smart devices (turnOn, turnOff, getStatus, getId, getType)
-
-4. DeviceFactory (devices package)
-
-Implements Factory Method pattern
-
-Creates smart device instances based on type and ID
-
-5. DeviceProxy (devices package)
-
-Implements Proxy Pattern
-
-Controls access to devices and logs actions
-
-6. SmartHomeHub (hub package)
-
-Central hub managing devices, schedules, and triggers
-
-7. AutomationEngine (automation package)
-
-Handles automation triggers
-
-Stores triggers and executes actions if conditions are met
-
-8. Trigger (automation package)
-
-Represents an automation rule with condition and action
-
-9. LoggingUtil (util package)
-
-Centralized logging with info(), warn(), error() functions and timestamps
-
-How Functionalities Are Achieved
-
-Turn ON/OFF devices: Uses DeviceProxy, checks state to prevent unnecessary actions
-
-View status: Hub collects device status and prints
-
-Add/Remove devices: Hub validates unique IDs and logs events
-
-Schedule commands: Simulated scheduling; hub maintains a list of commands
-
-Automation triggers: Conditions checked and actions applied if needed; logs indicate results
-
-Error handling: Graceful handling of invalid inputs and empty device lists
-
-Design Patterns Implemented
-
-Factory Method (Creational): DeviceFactory creates devices dynamically
-
-Proxy Pattern (Structural): DeviceProxy controls access to operations
-
-Observer/Automation Concept (Behavioral): AutomationEngine monitors device states
-
-SOLID & OOP Principles: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Encapsulation
-
-Notes
-
-Scheduler is simulated; tasks are stored and displayed but do not execute in real-time
-
-All interactions happen via console input
-
-Program continues running unless user chooses to exit
-
-How to Run
+```bash
 # Compile all packages
 javac Main.java devices/*.java hub/*.java util/*.java scheduler/*.java automation/*.java
 
 # Run the program
 java -cp . Main
+
+# Follow console prompts to view status, control devices, add/remove devices, schedule tasks, and add triggers
+
